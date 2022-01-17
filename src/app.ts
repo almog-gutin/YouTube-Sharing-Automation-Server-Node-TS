@@ -1,6 +1,8 @@
 import express, { Application, Request, Response } from 'express';
 import cors, { CorsOptions } from 'cors';
 
+import apiRouter from './routers/api.router';
+
 const app: Application = express();
 
 app.use(express.json());
@@ -12,11 +14,13 @@ const corsOptions: CorsOptions = {
         if (whitelist.indexOf(origin) !== -1) callback(null, true);
         else callback(new Error('Not allowed by CORS'));
     },
-    methods: ['GET', 'POST'],
+    methods: ['POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
 app.use(NODE_ENV === 'development' ? cors() : cors(corsOptions));
 
 app.get('/', (req: Request, res: Response) => res.send());
+
+app.use('/api', apiRouter);
 
 export default app;
