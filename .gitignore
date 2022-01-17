@@ -1,4 +1,19 @@
-node_modules
-build
+# Compiled Output
+/node_modules
+/build
 
-.env
+# OS
+.DS_Store
+
+# ENV
+.env*
+*.env
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+
