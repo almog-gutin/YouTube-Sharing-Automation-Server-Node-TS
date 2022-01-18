@@ -19,7 +19,7 @@ const corsOptions: CorsOptions = {
 };
 app.use(NODE_ENV === 'development' ? cors() : cors(corsOptions));
 
-app.get('/', (req: Request, res: Response) => res.send());
+app.get('/', (req: Request, res: Response) => res.send(200));
 
 app.use('/api', apiRouter);
 

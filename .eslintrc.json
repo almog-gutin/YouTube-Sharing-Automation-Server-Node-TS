@@ -10,6 +10,11 @@
         "sourceType": "module"
     },
     "plugins": ["@typescript-eslint", "prettier"],
+    "settings": {
+        "node": {
+            "tryExtensions": [".js", ".json", ".node", ".ts"]
+        }
+    },
     "rules": {
         "prettier/prettier": "error",
         "no-unused-vars": "warn",

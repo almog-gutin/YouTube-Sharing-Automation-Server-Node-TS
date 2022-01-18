@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
-import config from 'config';
 
 const NODE_ENV: string = process.env.NODE_ENV || 'development';
-if (NODE_ENV === 'development') dotenv.config({ path: '.env' });
+if (NODE_ENV === 'development') dotenv.config();
 
+import config from 'config';
 const PORT: string | number = config.get('PORT');
 
 import app from './app';
