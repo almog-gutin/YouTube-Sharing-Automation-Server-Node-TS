@@ -61,12 +61,12 @@ export const videoSearch = async (browser: Browser, page: Page, videoTitle: stri
     await filterInputEl.click();
     await filterInputEl.type(videoTitle);
     await page.keyboard.press('Enter');
-    await page.waitForTimeout(waitTime);
+    await page.waitForTimeout(2500);
 
     const noContentEl: ElementHandle<HTMLInputElement> | null = await page.$(
         '.no-content style-scope ytcp-video-section-content'
     );
-    if (!noContentEl) {
+    if (noContentEl) {
         await browser.close();
 
         return { type: 'NOT_FOUND', message: `No videos were found with the search: ${videoTitle}` };
