@@ -1,6 +1,8 @@
 import config from 'config';
 import { Browser, ElementHandle, Page } from 'puppeteer';
 
+import videoSearchResponse from '../interfaces/videoSearchResponse.interface';
+
 // Configurations
 const typeOptions = { delay: 100 };
 const waitTime = 1500;
@@ -50,7 +52,7 @@ export const loginToYouTubeAccount = async (browser: Browser, page: Page): Promi
  * 2. Selects the filter input and searches for the video title.
  * 3. The function returns if the videos were found or not, with an appropiate message.
  */
-export const videoSearch = async (browser: Browser, page: Page, videoTitle: string): Promise<any> => {
+export const videoSearch = async (browser: Browser, page: Page, videoTitle: string): Promise<videoSearchResponse> => {
     await page.click('#menu-item-1');
 
     await page.type('#text-input', videoTitle, typeOptions);
