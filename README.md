@@ -51,7 +51,7 @@ It is built with Node.js and Express Framework with TypeScript. In addition, the
 **Git clone**
 
 ```
-git clone
+git clone https://github.com/almog-gutin/YouTube-Sharing-Automation-Server-Node-TS.git
 ```
 
 **Instructions**
