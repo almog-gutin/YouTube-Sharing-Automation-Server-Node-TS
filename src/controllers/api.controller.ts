@@ -30,6 +30,9 @@ export const shareYouTubeVideos = async (req: Request, res: Response): Promise<v
                 statusText: 'Ok',
                 message: 'No videos were found.',
             });
+        await page.waitForTimeout(2500);
+
+        await puppetterUtils.shareVideosToEmail(browser, page);
 
         await page.waitForTimeout(5000);
 

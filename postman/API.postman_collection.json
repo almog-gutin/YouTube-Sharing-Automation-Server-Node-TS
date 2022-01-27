@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "1dd5ff92-4e0b-4a6a-b012-d08d200b53fc",
+		"name": "API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Share YouTube Videos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"\",\n    \"videoTitle\": \"\"\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/share",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"share"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unshare Youtube Videos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"\",\n    \"videoTitle\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{HOST}}:{{PORT}}/api/unshare",
+					"host": [
+						"{{HOST}}"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"unshare"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

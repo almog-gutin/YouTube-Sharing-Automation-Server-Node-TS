@@ -7,7 +7,7 @@ const app: Application = express();
 
 app.use(express.json());
 
-const NODE_ENV = process.env.NODE_ENV || 'development';
+const NODE_ENV: string = process.env.NODE_ENV || 'development';
 const whitelist: string[] = [];
 const corsOptions: CorsOptions = {
     origin: function (origin = '', callback) {

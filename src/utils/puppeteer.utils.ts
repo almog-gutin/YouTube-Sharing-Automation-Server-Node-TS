@@ -50,7 +50,9 @@ export const loginToYouTubeAccount = async (browser: Browser, page: Page): Promi
  * Steps:
  * 1. First clicks the content tab in the sidebar which will redirect to the channel's video content.
  * 2. Selects the filter input and searches for the video title.
- * 3. The function returns if the videos were found or not, with an appropiate message.
+ *
+ * @returns
+ * Returns an oject with a type of "FOUND" or "NOT_FOUND", whcih means if the videos were found or not. In addition, the object it includes an appropiate message.
  */
 export const videoSearch = async (browser: Browser, page: Page, videoTitle: string): Promise<videoSearchResponse> => {
     await page.click('#menu-item-1');
@@ -59,13 +61,14 @@ export const videoSearch = async (browser: Browser, page: Page, videoTitle: stri
     const filterInputEl: ElementHandle<HTMLInputElement> | null = await page.$('#text-input');
     if (!filterInputEl) throw new Error();
     await filterInputEl.click();
-    await filterInputEl.type(videoTitle);
+    await filterInputEl.type(videoTitle, typeOptions);
     await page.keyboard.press('Enter');
     await page.waitForTimeout(2500);
 
     const noContentEl: ElementHandle<HTMLInputElement> | null = await page.$(
         '.no-content style-scope ytcp-video-section-content'
     );
+
     if (noContentEl) {
         await browser.close();
 
@@ -73,4 +76,26 @@ export const videoSearch = async (browser: Browser, page: Page, videoTitle: stri
     }
 
     return { type: 'Found' };
+};
+
+export const shareVideosToEmail = async (browser: Browser, page: Page): Promise<void> => {
+    const videoElArr = await page.$$('[role="table"] div#row-container div#video-thumbnail a#thumbnail-anchor');
+    if (!videoElArr) throw new Error();
+
+    for (const videoEl of videoElArr) {
+        const link: string = (await (await videoEl.getProperty('href')).jsonValue()) || '';
+        if (!link) throw new Error();
+
+        const videoPage: Page = await browser.newPage();
+        await videoPage.goto(link);
+        await page.waitForTimeout(5000);
+
+        const visibilitySelector =
+            'div.all-pages.style-scope.ytcp-app/#edit/ytcp-video-metadata-editor/ytcp-video-metadata-editor-sidepanel/div/ytcp-video-metadata-visibility';
+        await videoPage.waitForSelector(visibilitySelector);
+        const visibilityEl = await page.$(visibilitySelector);
+        console.log(visibilityEl);
+
+        await videoPage.close();
+    }
 };
