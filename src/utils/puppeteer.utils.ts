@@ -82,20 +82,40 @@ export const shareVideosToEmail = async (browser: Browser, page: Page): Promise<
     const videoElArr = await page.$$('[role="table"] div#row-container div#video-thumbnail a#thumbnail-anchor');
     if (!videoElArr) throw new Error();
 
-    for (const videoEl of videoElArr) {
-        const link: string = (await (await videoEl.getProperty('href')).jsonValue()) || '';
-        if (!link) throw new Error();
+    const link: string = (await (await videoElArr[0].getProperty('href')).jsonValue()) || '';
+    if (!link) throw new Error();
 
-        const videoPage: Page = await browser.newPage();
-        await videoPage.goto(link);
-        await page.waitForTimeout(5000);
+    const videoPage: Page = await browser.newPage();
+    await videoPage.goto(link);
+    await page.waitForTimeout(5000);
 
-        const visibilitySelector =
-            'div.all-pages.style-scope.ytcp-app/#edit/ytcp-video-metadata-editor/ytcp-video-metadata-editor-sidepanel/div/ytcp-video-metadata-visibility';
-        await videoPage.waitForSelector(visibilitySelector);
-        const visibilityEl = await page.$(visibilitySelector);
-        console.log(visibilityEl);
+    const visibilityDropdownHandle = await page.evaluateHandle<ElementHandle<HTMLDivElement>>(() => {
+        const div = document.querySelector('ytcp-video-metadata-visibility > div#container');
+        console.log(div);
+        return div;
+    });
+    console.log(visibilityDropdownHandle);
+    await visibilityDropdownHandle.click();
 
-        await videoPage.close();
-    }
+    await videoPage.close();
+
+    // Looping through all the videos that were found.
+    // for (const videoEl of videoElArr) {
+    //     const link: string = (await (await videoEl.getProperty('href')).jsonValue()) || '';
+    //     if (!link) throw new Error();
+
+    //     const videoPage: Page = await browser.newPage();
+    //     await videoPage.goto(link);
+    //     await page.waitForTimeout(5000);
+
+    //     const visibilityDropdownHandle = await page.evaluateHandle<ElementHandle<HTMLDivElement>>(() => {
+    //         const div = document.querySelector('ytcp-video-metadata-visibility > div#container');
+    //         console.log(div);
+    //         return div;
+    //     });
+    //     console.log(visibilityDropdownHandle);
+    //     // visibilityDropdownHandle.click();
+
+    //     await videoPage.close();
+    // }
 };
